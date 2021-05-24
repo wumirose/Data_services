@@ -1,8 +1,8 @@
-from Common.load_manager import ALL_SOURCES, SourceDataLoadManager
+from Common.load_manager import SourceDataLoadManager
 
 import os
 
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.utils.dates import days_ago
 
 from airflow.models import DAG
@@ -97,13 +97,13 @@ def create_python_task (dag, name, a_callable, func_kwargs=None):
         task_id=name,
         python_callable=task_wrapper,
         op_kwargs=op_kwargs,
-        executor_config=get_executor_config (),
+        executor_config=get_executor_config(),
         dag=dag,
         provide_context=True
     )
 
 
-def create_dag_from_source(dag_id, source):
+def create_dag_from_source(dag_id, source, sdl):
     with DAG(
         dag_id=dag_id,
         default_args=default_args,
@@ -111,14 +111,17 @@ def create_dag_from_source(dag_id, source):
     ) as dag:
         # @todo ./data needs to be a more abs dir, when moving to k8s executors but for local it should be fine.
         # @todo maybe make a file-browser side car container
-        sdl = SourceDataLoadManager(source_subset=[source], storage_dir='./data')
+
+        # check_for_update should be the first step - branching to either read_source if True or exiting if False
+        # check_for_update = BranchPythonOperator(task_id=f'check_for_update-{source}', python_callable=sdl.check_if_source_needs_update
         read_source = create_python_task(dag, f'grab_from_source-{source}', a_callable=sdl.update_source, func_kwargs={'source_id': source})
         normalize_task = create_python_task(dag, f'normalize_source-{source}', a_callable=sdl.normalize_source, func_kwargs={'source_id': source})
-        supplimentation = create_python_task(dag, f'suppliment-source-{source}', a_callable=sdl.supplement_source, func_kwargs={'source_id': source})
-        read_source >> normalize_task >> supplimentation
+        supplementation = create_python_task(dag, f'supplement-source-{source}', a_callable=sdl.supplement_source, func_kwargs={'source_id': source})
+        read_source >> normalize_task >> supplementation
     return dag
 
 
-for source in ALL_SOURCES:
-    dag_id = f"{source}_DS_DAG"
-    globals()[dag_id] = create_dag_from_source(source=source, dag_id=dag_id)
+sdl = SourceDataLoadManager()
+for source_id in sdl.source_list:
+    dag_id = f"{source_id}_DS_DAG"
+    globals()[dag_id] = create_dag_from_source(dag_id=dag_id, source=source_id, sdl=sdl)

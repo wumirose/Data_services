@@ -37,39 +37,6 @@ HMDB = 'HMDB'
 HGNC = 'HGNC'
 PANTHER = 'PANTHER'
 
-ALL_SOURCES = [
-    CTD,
-    INTACT,
-    GTOPDB,
-    HUMAN_GOA,
-    HGNC,
-    UBERGRAPH,
-    VP,
-    HMDB,
-    GWAS_CATALOG
-
-    # in progress
-    # PANTHER,
-
-    # items to go
-    # biolink,
-    # chembio,
-    # chemnorm,
-    # cord19-scibite,
-    # cord19-scigraph,
-    # covid-phenotypes,
-    # hetio,
-    # kegg,
-    # mychem,
-    # ontological-hierarchy,
-    # textminingkp,
-
-    # items with issues
-    # PHAROS - normalization issues in load manager. normalization lists are too large to parse.
-    # FOODB - no longer has curies that will normalize.
-    # UNIREF - normalization issues in load manager. normalization lists are too large to parse.
-]
-
 source_data_loader_classes = {
     CTD: CTDLoader,
     INTACT: IALoader,
@@ -174,35 +141,40 @@ class SourceDataLoadManager:
 
     def find_a_source_to_update(self):
         for source_id in self.source_list:
-            source_metadata = self.metadata[source_id]
-            update_status = source_metadata.get_update_status()
-            if update_status == Metadata.NOT_STARTED:
+            if self.check_if_source_needs_update(source_id):
                 return source_id
-            elif update_status == Metadata.IN_PROGRESS:
-                continue
-            elif update_status == Metadata.BROKEN or update_status == Metadata.FAILED:
-                # TODO do we want to retry these automatically?
-                pass
-            else:
-                try:
-                    loader = source_data_loader_classes[source_id]()
-                    self.logger.info(f"Retrieving source version for {source_id}...")
-                    latest_source_version = loader.get_latest_source_version()
-                    if latest_source_version != source_metadata.get_source_version():
-                        self.logger.info(f"Found new source version for {source_id}: {latest_source_version}")
-                        source_metadata.archive_metadata()
-                        self.new_version_lookup[source_id] = latest_source_version
-                        return source_id
-                    else:
-                        self.logger.info(f"Source version for {source_id} is up to date ({latest_source_version})")
-                except SourceDataFailedError as failed_error:
-                    # TODO report these by email or something automated
-                    self.logger.info(
-                        f"SourceDataFailedError while checking for updated version for {source_id}: {failed_error.error_message}")
-                    source_metadata.set_version_update_error(failed_error.error_message)
-                    source_metadata.set_version_update_status(Metadata.FAILED)
-
         return None
+
+    def check_if_source_needs_update(self, source_id):
+        source_metadata = self.metadata[source_id]
+        update_status = source_metadata.get_update_status()
+        if update_status == Metadata.NOT_STARTED:
+            return True
+        elif update_status == Metadata.IN_PROGRESS:
+            return False
+        elif update_status == Metadata.BROKEN or update_status == Metadata.FAILED:
+            # TODO do we want to retry these automatically?
+            return False
+        else:
+            try:
+                loader = source_data_loader_classes[source_id]()
+                self.logger.info(f"Retrieving source version for {source_id}...")
+                latest_source_version = loader.get_latest_source_version()
+                if latest_source_version != source_metadata.get_source_version():
+                    self.logger.info(f"Found new source version for {source_id}: {latest_source_version}")
+                    source_metadata.archive_metadata()
+                    self.new_version_lookup[source_id] = latest_source_version
+                    return True
+                else:
+                    self.logger.info(f"Source version for {source_id} is up to date ({latest_source_version})")
+                    return False
+            except SourceDataFailedError as failed_error:
+                # TODO report these by email or something automated
+                self.logger.info(
+                    f"SourceDataFailedError while checking for updated version for {source_id}: {failed_error.error_message}")
+                source_metadata.set_version_update_error(failed_error.error_message)
+                source_metadata.set_version_update_status(Metadata.FAILED)
+                return False
 
     def update_source(self, source_id: str):
         source_metadata = self.metadata[source_id]
@@ -344,6 +316,7 @@ class SourceDataLoadManager:
         source_metadata = self.metadata[source_id]
         source_metadata.set_supplementation_status(Metadata.IN_PROGRESS)
         try:
+            supplementation_info = {}
             if source_metadata.has_sequence_variants():
                 nodes_file_path = self.get_normalized_node_file_path(source_id, source_metadata)
                 supplemental_node_file_path = self.get_supplemental_node_file_path(source_id, source_metadata)
@@ -361,9 +334,9 @@ class SourceDataLoadManager:
                                                                       normalized_supp_edge_file_path=normalized_supp_edge_file_path,
                                                                       supp_edge_norm_failures_file_path=supp_edge_norm_failures_file_path
                                                                       )
-                current_time = datetime.datetime.now().strftime('%m-%d-%y %H:%M:%S')
-                source_metadata.set_supplementation_info(supplementation_info, supplementation_time=current_time)
-                source_metadata.set_supplementation_status(Metadata.STABLE)
+            current_time = datetime.datetime.now().strftime('%m-%d-%y %H:%M:%S')
+            source_metadata.set_supplementation_info(supplementation_info, supplementation_time=current_time)
+            source_metadata.set_supplementation_status(Metadata.STABLE)
             self.logger.info(f"Supplementing source {source_id} complete.")
         except SupplementationFailedError as failed_error:
             # TODO report these by email or something automated
@@ -431,7 +404,6 @@ class SourceDataLoadManager:
         versioned_file_name = self.get_versioned_file_name(source_id, source_metadata)
         return os.path.join(self.get_source_dir_path(source_id), f'{versioned_file_name}_norm_supp_edge_failures.log')
 
-
     def get_source_dir_path(self, source_id: str):
         return os.path.join(self.storage_dir, source_id)
 
@@ -478,15 +450,14 @@ class SourceDataLoadManager:
                 if 'strict_normalization' in data_source_config:
                     if not data_source_config['strict_normalization']:
                         self.sources_without_strict_normalization.append(data_source_id)
-        self.logger.info(f'Config loaded... ({config_path})\n'
-                         f'Sources without Strict Norm: {self.sources_without_strict_normalization}')
+        self.logger.debug(f'Config loaded... ({config_path})')
 
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Transform data sources into KGX files.")
     parser.add_argument('-dir', '--storage', help='Specify the storage directory. The environment variable DATA_SERVICES_STORAGE is used otherwise.')
-    parser.add_argument('-ds', '--data_source', default='all', help=f'Select a single data source to process from the following: {ALL_SOURCES}')
+    parser.add_argument('-ds', '--data_source', default='all', help=f'Select a single data source to process from the following: {source_data_loader_classes.keys()}')
     parser.add_argument('-t', '--test_mode', action='store_true', help='Test mode will load a small sample version of the data.')
     args = parser.parse_args()
 
@@ -495,7 +466,7 @@ if __name__ == '__main__':
         load_manager = SourceDataLoadManager(test_mode=args.test_mode)
         load_manager.start()
     else:
-        if data_source not in ALL_SOURCES:
+        if data_source not in source_data_loader_classes.keys():
             print(f'Data source not valid. Aborting. (Invalid source: {data_source})')
         else:
             load_manager = SourceDataLoadManager(source_subset=[data_source], test_mode=args.test_mode)
