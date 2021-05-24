@@ -2,11 +2,11 @@ pandas
 requests
 pytest==5.3.5
 pytest-cov==2.8.1
-# This is causing errors with Flask app of airflow on python 3.8.5 (syntax error?)
-# httpsproxy_urllib2
+httpsproxy_urllib2
 git+https://github.com/ObesityHub/robokop-genetics.git
 rdflib
 mysql-connector
 jsonlines
 pyyaml
-apache-airflow==2.1.0
+bs4
+tarfile

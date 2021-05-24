@@ -6,9 +6,11 @@ import gzip
 import requests
 import pandas as pd
 
+from zipfile import ZipFile
+from io import TextIOWrapper
 from io import BytesIO
 from rdflib import Graph
-from urllib.request import urlopen
+import urllib
 from csv import reader, DictReader
 from ftplib import FTP
 from datetime import datetime
@@ -593,28 +595,21 @@ class GetData:
         if not os.path.exists(os.path.join(data_dir, data_file)):
             self.logger.debug(f'Retrieving {url} -> {data_dir}')
 
-            # get the file
-            file_data = urlopen(url)
+            hdr = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
+            req = urllib.request.Request(url, headers=hdr)
 
-            # open a file for the data
-            with open(os.path.join(data_dir, data_file), 'wb') as fp:
-                # init the retrieve bytes by block size
-                block = 8192
+            # Read the file inside the .gz archive located at url
+            with urllib.request.urlopen(req) as response:
+                with gzip.GzipFile(fileobj=response) as uncompressed:
+                    file_content = uncompressed.read()
 
-                # until all bytes read
-                while True:
-                    # get some bytes
-                    buffer = file_data.read(block)
+                    # strip off the .gz if exists
+                    data_file = data_file.replace('.gz', '')
 
-                    # did we run out of data
-                    if not buffer:
-                        break
-
-                    # keep track of the number of bytes transferred
-                    byte_counter += len(buffer)
-
-                    # output the data to the file
-                    fp.write(buffer)
+                    # open a file for the data
+                    with open(os.path.join(data_dir, data_file), 'wb') as fp:
+                        # output the data to the file
+                        byte_counter = fp.write(file_content)
         else:
             byte_counter = 1
 
@@ -886,7 +881,7 @@ class GetData:
                 byte_count = 1
             else:
                 # get the rest of the files
-                byte_count: int = self.pull_via_http(f'http://ctdbase.org/reports/{data_file}', data_dir)
+                byte_count: int = self.pull_via_http(f'http://ctdbase.org/reports/{data_file}.gz', data_dir)
 
             # did re get some good file data
             if byte_count > 0:
@@ -1011,10 +1006,11 @@ class GetData:
         return ret_val
 
     @staticmethod
-    def split_file(data_file_path: str, data_file_name: str, lines_per_file: int = 150000) -> list:
+    def split_file(infile_path, data_file_path: str, data_file_name: str, lines_per_file: int = 150000) -> list:
         """
         splits a file into numerous smaller files.
 
+        : infile_path: the path to the input file
         :param data_file_path: the path to where the input file is and where the split files go
         :param data_file_name: the name of the input data file
         :param lines_per_file: the number of lines for each split file
@@ -1034,41 +1030,43 @@ class GetData:
         # init storage for a group of lines
         lines: list = []
 
-        # get all the data lines
-        with open(os.path.join(data_file_path, data_file_name), 'r') as fp:
-            while True:
-                # read the line
-                line = fp.readline()
+        # open the zip file
+        with ZipFile(os.path.join(infile_path)) as zf:
+            # open the taxon file indexes and the uniref data file
+            with TextIOWrapper(zf.open(data_file_name), encoding="utf-8") as fp:
+                while True:
+                    # read the line
+                    line = fp.readline()
 
-                # save the line if there is one
-                if line:
-                    lines.append(line)
-                    line_counter += 1
-                else:
-                    break
+                    # save the line
+                    if line:
+                        lines.append(line)
+                        line_counter += 1
+                    else:
+                        break
 
-                # did we hit the write threshold
-                if line_counter >= lines_per_file:
-                    # loop through the lines
-                    # create the output file
-                    file_name = os.path.join(data_file_path, file_prefix + str(file_counter))
+                    # did we hit the write threshold
+                    if line_counter >= lines_per_file:
+                        # loop through the lines
+                        # create the output file
+                        file_name = os.path.join(data_file_path, file_prefix + str(file_counter))
 
-                    # add the file name to the output list
-                    ret_val.append(file_name)
+                        # add the file name to the output list
+                        ret_val.append(file_name)
 
-                    # open the file
-                    with open(file_name, 'w') as of:
-                        # write the lines
-                        of.write(''.join(lines))
+                        # open the file
+                        with open(file_name, 'w') as of:
+                            # write the lines
+                            of.write(''.join(lines))
 
-                    # increment the file counter
-                    file_counter += 1
+                        # increment the file counter
+                        file_counter += 1
 
-                    # reset the line counter
-                    line_counter = 0
+                        # reset the line counter
+                        line_counter = 0
 
-                    # clear out for the next cycle
-                    lines.clear()
+                        # clear out for the next cycle
+                        lines.clear()
 
         # output any not yet written
         # create the output file

@@ -3,8 +3,10 @@ import csv
 import argparse
 import logging
 import re
-import datetime
+import requests
+import tarfile
 
+from bs4 import BeautifulSoup
 from operator import itemgetter
 from Common.utils import LoggingUtil, GetData
 from Common.kgx_file_writer import KGXFileWriter
@@ -48,13 +50,31 @@ class CTDLoader(SourceDataLoader):
         """
         return self.__class__.__name__
 
-    def get_latest_source_version(self):
+    def get_latest_source_version(self) -> str:
         """
         gets the version of the data
 
         :return:
         """
-        return datetime.datetime.now().strftime("%m/%d/%Y")
+
+        # init the return
+        ret_val: str = 'Not found'
+
+        # load the web page for CTD
+        html_page: requests.Response = requests.get('http://ctdbase.org/about/dataStatus.go')
+
+        # get the html into a parsable object
+        resp: BeautifulSoup = BeautifulSoup(html_page.content, 'html.parser')
+
+        # find the version string
+        version: BeautifulSoup.Tag = resp.find(id='pgheading')
+
+        # was the version found
+        if version is not None:
+            # save the value
+            ret_val = version.text.split(':')[1].strip()
+
+        return ret_val
 
     def get_ctd_data(self):
         """
@@ -65,10 +85,10 @@ class CTDLoader(SourceDataLoader):
         gd: GetData = GetData(self.logger.level)
 
         # get the list of files to capture
+        # note: there is a file that comes fom Balhoffs team (ctd-grouped-pipes.tsv) that must be retrieved manually
         file_list: list = [
-            'ctd-grouped-pipes.tsv',
-            'CTD_exposure_events.tsv',
-            'CTD_chemicals_diseases.tsv'
+            'CTD_chemicals_diseases.tsv',
+            'CTD_exposure_events.tsv'
         ]
 
         # get all the files noted above
@@ -77,6 +97,11 @@ class CTDLoader(SourceDataLoader):
         # abort if we didnt get all the files
         if file_count != len(file_list):
             raise Exception('Not all files were retrieved.')
+        # if everything is ok so far get the hand curated file in the right place
+        else:
+            tar = tarfile.open(os.path.join(os.path.dirname(__file__), 'ctd.tar.gz'))
+            tar.extractall(self.data_path)
+            tar.close()
 
     def write_to_file(self, nodes_output_file_path: str, edges_output_file_path: str) -> None:
         """
@@ -132,7 +157,6 @@ class CTDLoader(SourceDataLoader):
 
         :return:
         """
-
         # process disease to exposure
         node_list, edge_list, records, skipped = self.disease_to_exposure(os.path.join(self.data_path, 'CTD_exposure_events.tsv'))
         self.final_node_list.extend(node_list)
@@ -538,25 +562,28 @@ class CTDLoader(SourceDataLoader):
         :param r:
         :return:
         """
-
-        # init the return variables
+        # init returned variables
         good_row: bool = True
-        relation_label: str = ''
+        props: dict = {}
         pmids: list = []
-        props:list = []
+        relation_label: str = ''
 
-        # check the data that is to be used
-        if r['interaction'].startswith('?') == '' or r['taxonID'].startswith('?') < 2 or r['PMID'].startswith('?'):
-            good_row = False
-        else:
+        # loop through data and search for "?" which indicates incomplete data
+        for item in r:
+            if r[item].find('?') > -1:
+                good_row = False
+                break
+
+        # check for invalid data
+        if good_row:
             # get the standard properties
-            props = {'description': r['interaction'], 'NCBITAXON': r['taxonID'].split(':')[1]}
+            props: dict = {'description': r['interaction'], 'NCBITAXON': r['taxonID'].split(':')[1]}
 
             # get the pubmed ids into a list
-            pmids = r['PMID'].split('|')
+            pmids: list = r['PMID'].split('|')
 
             # set the relation label. might get overwritten in edge norm
-            relation_label = r['interaction']
+            relation_label: str = r['interaction']
 
             # less then 3 publications
             if len(pmids) < 3:
@@ -633,7 +660,7 @@ class CTDLoader(SourceDataLoader):
         if marker:
             return f'CTD:{marker_relation_label}', marker_relation_label
 
-        # if ther eis a good amount of therapeutic evidence
+        # if there is a good amount of therapeutic evidence
         if therapeutic:
             return f'CTD:{therapeutic_relation_label}', therapeutic_relation_label
 
@@ -643,7 +670,7 @@ class CTDLoader(SourceDataLoader):
 
 if __name__ == '__main__':
     """
-    entry point to initiate the parsing outside of the loda manager
+    entry point to initiate the parsing outside of the load manager
     """
     # create a command line parser
     ap = argparse.ArgumentParser(description='Load CTD data files and create KGX import files.')
