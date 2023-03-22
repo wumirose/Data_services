@@ -1,0 +1,124 @@
+{
+    "DatabaseObject": {
+        "AbstractModifiedResidue": {
+            "GeneticallyModifiedResidue": {
+                "FragmentModification": {
+                    "FragmentDeletionModification": {},
+                    "FragmentInsertionModification": {},
+                    "FragmentReplacedModification": {}
+                },
+                "ReplacedResidue": {
+                    "NonsenseMutation": {}
+                }
+            },
+            "TranscriptionalModification": {
+                "ModifiedNucleotide": {}
+            },
+            "TranslationalModification": {
+                "CrosslinkedResidue": {
+                    "InterChainCrosslinkedResidue": {},
+                    "IntraChainCrosslinkedResidue": {}
+                },
+                "GroupModifiedResidue": {},
+                "ModifiedResidue": {}
+            }
+        },
+        "Affiliation": {},
+        "CatalystActivity": {},
+        "ControlReference": {
+            "CatalystActivityReference": {},
+            "RegulationReference": {}
+        },
+        "ControlledVocabulary": {
+            "NegativePrecedingEventReason": {},
+            "ReactionType": {
+                "DrugActionType": {}
+            }
+        },
+        "DatabaseIdentifier": {},
+        "EntityFunctionalStatus": {},
+        "Event": {
+            "Pathway": {
+                "TopLevelPathway": {}
+            },
+            "ReactionLikeEvent": {
+                "BlackBoxEvent": {},
+                "Depolymerisation": {},
+                "FailedReaction": {},
+                "Polymerisation": {},
+                "Reaction": {}
+            }
+        },
+        "EvidenceType": {},
+        "ExternalOntology": {
+            "CellType": {},
+            "Disease": {},
+            "PsiMod": {},
+            "SequenceOntology": {}
+        },
+        "Figure": {},
+        "FunctionalStatus": {},
+        "FunctionalStatusType": {},
+        "GO_Term": {
+            "GO_BiologicalProcess": {},
+            "GO_CellularComponent": {
+                "Compartment": {}
+            },
+            "GO_MolecularFunction": {}
+        },
+        "InstanceEdit": {},
+        "Interaction": {
+            "UndirectedInteraction": {}
+        },
+        "NegativePrecedingEvent": {},
+        "Person": {},
+        "PhysicalEntity": {
+            "Complex": {},
+            "Drug": {
+                "ChemicalDrug": {},
+                "ProteinDrug": {}
+            },
+            "EntitySet": {
+                "CandidateSet": {},
+                "DefinedSet": {}
+            },
+            "GenomeEncodedEntity": {
+                "EntityWithAccessionedSequence": {}
+            },
+            "OtherEntity": {},
+            "Polymer": {},
+            "SimpleEntity": {}
+        },
+        "Publication": {
+            "Book": {},
+            "LiteratureReference": {},
+            "URL": {}
+        },
+        "ReferenceDatabase": {},
+        "ReferenceEntity": {
+            "ReferenceGroup": {},
+            "ReferenceMolecule": {},
+            "ReferenceSequence": {
+                "ReferenceDNASequence": {},
+                "ReferenceGeneProduct": {
+                    "ReferenceIsoform": {}
+                },
+                "ReferenceRNASequence": {}
+            },
+            "ReferenceTherapeutic": {}
+        },
+        "Regulation": {
+            "NegativeRegulation": {
+                "NegativeGeneExpressionRegulation": {}
+            },
+            "PositiveRegulation": {
+                "PositiveGeneExpressionRegulation": {},
+                "Requirement": {}
+            }
+        },
+        "Summation": {},
+        "Taxon": {
+            "Species": {}
+        }
+    }
+}
