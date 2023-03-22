@@ -27,53 +27,48 @@ class UberGraphTools:
                  ubergraph_archive_path: str = None,
                  graph_base_path: str = None):
 
-        self.ubergraph_archive_path = ubergraph_archive_path
-        self.graph_base_path = graph_base_path
-        self.converted_to_curies = False
         self.node_curies = {}
         self.edge_curies = {}
+        self.ubergraph_archive_path = ubergraph_archive_path
+        self.graph_base_path = graph_base_path
+        self.convert_iris_to_curies()
 
     def convert_iris_to_curies(self):
         biolink_prefix_map = self.get_biolink_prefix_map()
         iri_to_biolink_curie_converter = curies.Converter.from_prefix_map(biolink_prefix_map)
         iri_to_obo_curie_converter = curies.get_obo_converter()
+        custom_converter = curies.Converter.from_prefix_map(OBO_MISSING_MAPPINGS)
+        
+        # A chain combines several converters in a row
+        chain_converter = curies.chain([
+            iri_to_biolink_curie_converter,
+            iri_to_obo_curie_converter,
+            custom_converter,
+        ])
 
         with tarfile.open(self.ubergraph_archive_path, 'r') as tar_files:
             self.node_curies = {}
             with tar_files.extractfile(f'{self.graph_base_path}/node-labels.tsv') as node_labels_file:
                 for line in TextIOWrapper(node_labels_file):
                     node_id, node_iri = tuple(line.rstrip().split('\t'))
-                    node_curie = iri_to_biolink_curie_converter.compress(node_iri)
+                    node_curie = chain_converter.compress(node_iri)
                     if node_curie is None:
-                        node_curie = iri_to_obo_curie_converter.compress(node_iri)
-                        if node_curie is None:
-                            # print(f'Could not find prefix mapping for: {node_iri}')
-                            for key, value in OBO_MISSING_MAPPINGS.items():
-                                if key in node_iri:
-                                    node_curie = node_iri.replace(value, f'{value}:')
+                        print(f'Could not find prefix mapping for: {node_iri}')
                     self.node_curies[node_id] = node_curie
 
             self.edge_curies = {}
             with tar_files.extractfile(f'{self.graph_base_path}/edge-labels.tsv') as edge_labels_file:
                 for line in TextIOWrapper(edge_labels_file):
                     edge_id, edge_iri = tuple(line.rstrip().split('\t'))
-                    edge_curie = iri_to_biolink_curie_converter.compress(edge_iri)
+                    edge_curie = chain_converter.compress(edge_iri)
                     if edge_curie is None:
-                        edge_curie = iri_to_obo_curie_converter.compress(edge_iri)
-                        # if edge_curie is None:
-                        #    print(f'No prefix mapping found for: {edge_iri}')
+                        print(f'No prefix mapping found for: {edge_iri}')
                     self.edge_curies[edge_id] = edge_curie
 
-        self.converted_to_curies = True
-
     def get_curie_for_node_id(self, node_id):
-        if not self.converted_to_curies:
-            self.convert_iris_to_curies()
         return self.node_curies[node_id]
 
     def get_curie_for_edge_id(self, edge_id):
-        if not self.converted_to_curies:
-            self.convert_iris_to_curies()
         return self.edge_curies[edge_id]
 
     @staticmethod
