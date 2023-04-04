@@ -50,6 +50,7 @@ graphs:
       - graph_id: RobokopKG
     sources:
       - source_id: Cord19
+      - source_id: textminingkp
 
   - graph_id: Biolink_Automat
     sources:
@@ -144,3 +145,12 @@ graphs:
       - source_id: UberGraph
       - source_id: OntologicalHierarchy
         merge_strategy: connected_edge_subset
+
+  - graph_id: ViralProteome_Automat
+    sources:
+      - source_id: ViralProteome
+      - source_id: OntologicalHierarchy
+        merge_strategy: connected_edge_subset
+
+
+
