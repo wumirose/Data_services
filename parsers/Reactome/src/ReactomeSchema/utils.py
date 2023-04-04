@@ -41,7 +41,7 @@ def unique_nodes_edges():
     Get and count unique node labels and unique edges
     :return: dict
     """
-    if not os.path.exists('unique.json'):
+    if not (os.path.exists('unique_nodes.json') and os.path.exists('unique_edges.json')):
         cypher_query = """
             MATCH (n)
             UNWIND labels(n) AS label
@@ -59,15 +59,21 @@ def unique_nodes_edges():
             RETURN {node_labels: node_labels, edge_types: edge_types}
         """
         results = db.query(cypher_query, db='reactome')
-        json_data = json.dumps(results[0][0], indent=4)
-        with open('unique.json', 'w') as f:
-            f.write(json_data)
+
+        node_data = json.dumps(results[0][0])['node_labels']
+        edge_data = json.dumps(results[0][0])['edge_types']
+        with open('unique_nodes.json', 'w') as f:
+            f.write(node_data)
+        with open('unique_edges.json', 'w') as f:
+            f.write(edge_data)
     else:
-        with open('unique.json', 'r') as f:
-            json_data = json.loads(f.read())
+        with open('unique_edges.json', 'r') as f:
+            node_json_data = json.loads(f.read())
+        with open('unique_edges.json', 'r') as f:
+            edge_json_data = json.loads(f.read())
     print("+" * 15)
-    print(f"Unique Nodes Types: {len(json_data['node_labels'])}")
-    print(f"Unique Edges Types: {len(json_data['edge_types'])}")
+    print(f"Unique Nodes Types: {len(node_json_data)}")
+    print(f"Unique Edges Types: {len(edge_json_data)}")
     print("+" * 15, '\n')
 
 

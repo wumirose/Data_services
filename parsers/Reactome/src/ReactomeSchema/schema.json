@@ -1,0 +1,305 @@
+{
+    "AbstractModifiedResidue": {
+        "GeneticallyModifiedResidue": {
+            "FragmentModification": {
+                "FragmentDeletionModification": {},
+                "FragmentInsertionModification": {},
+                "FragmentReplacedModification": {}
+            },
+            "FragmentDeletionModification": {},
+            "FragmentInsertionModification": {},
+            "FragmentReplacedModification": {},
+            "ReplacedResidue": {
+                "NonsenseMutation": {}
+            },
+            "NonsenseMutation": {}
+        },
+        "FragmentModification": {
+            "FragmentDeletionModification": {},
+            "FragmentInsertionModification": {},
+            "FragmentReplacedModification": {}
+        },
+        "FragmentDeletionModification": {},
+        "FragmentInsertionModification": {},
+        "FragmentReplacedModification": {},
+        "ReplacedResidue": {
+            "NonsenseMutation": {}
+        },
+        "NonsenseMutation": {},
+        "TranscriptionalModification": {
+            "ModifiedNucleotide": {}
+        },
+        "ModifiedNucleotide": {},
+        "TranslationalModification": {
+            "CrosslinkedResidue": {
+                "InterChainCrosslinkedResidue": {},
+                "IntraChainCrosslinkedResidue": {}
+            },
+            "InterChainCrosslinkedResidue": {},
+            "IntraChainCrosslinkedResidue": {},
+            "GroupModifiedResidue": {},
+            "ModifiedResidue": {}
+        },
+        "CrosslinkedResidue": {
+            "InterChainCrosslinkedResidue": {},
+            "IntraChainCrosslinkedResidue": {}
+        },
+        "InterChainCrosslinkedResidue": {},
+        "IntraChainCrosslinkedResidue": {},
+        "GroupModifiedResidue": {},
+        "ModifiedResidue": {}
+    },
+    "GeneticallyModifiedResidue": {
+        "FragmentModification": {
+            "FragmentDeletionModification": {},
+            "FragmentInsertionModification": {},
+            "FragmentReplacedModification": {}
+        },
+        "FragmentDeletionModification": {},
+        "FragmentInsertionModification": {},
+        "FragmentReplacedModification": {},
+        "ReplacedResidue": {
+            "NonsenseMutation": {}
+        },
+        "NonsenseMutation": {}
+    },
+    "FragmentModification": {
+        "FragmentDeletionModification": {},
+        "FragmentInsertionModification": {},
+        "FragmentReplacedModification": {}
+    },
+    "FragmentDeletionModification": {},
+    "FragmentInsertionModification": {},
+    "FragmentReplacedModification": {},
+    "ReplacedResidue": {
+        "NonsenseMutation": {}
+    },
+    "NonsenseMutation": {},
+    "TranscriptionalModification": {
+        "ModifiedNucleotide": {}
+    },
+    "ModifiedNucleotide": {},
+    "TranslationalModification": {
+        "CrosslinkedResidue": {
+            "InterChainCrosslinkedResidue": {},
+            "IntraChainCrosslinkedResidue": {}
+        },
+        "InterChainCrosslinkedResidue": {},
+        "IntraChainCrosslinkedResidue": {},
+        "GroupModifiedResidue": {},
+        "ModifiedResidue": {}
+    },
+    "CrosslinkedResidue": {
+        "InterChainCrosslinkedResidue": {},
+        "IntraChainCrosslinkedResidue": {}
+    },
+    "InterChainCrosslinkedResidue": {},
+    "IntraChainCrosslinkedResidue": {},
+    "GroupModifiedResidue": {},
+    "ModifiedResidue": {},
+    "Affiliation": {},
+    "CatalystActivity": {},
+    "ControlReference": {
+        "CatalystActivityReference": {},
+        "RegulationReference": {}
+    },
+    "CatalystActivityReference": {},
+    "RegulationReference": {},
+    "ControlledVocabulary": {
+        "NegativePrecedingEventReason": {},
+        "ReactionType": {
+            "DrugActionType": {}
+        },
+        "DrugActionType": {}
+    },
+    "NegativePrecedingEventReason": {},
+    "ReactionType": {
+        "DrugActionType": {}
+    },
+    "DrugActionType": {},
+    "DatabaseIdentifier": {},
+    "EntityFunctionalStatus": {},
+    "Event": {
+        "Pathway": {
+            "TopLevelPathway": {}
+        },
+        "TopLevelPathway": {},
+        "ReactionLikeEvent": {
+            "BlackBoxEvent": {},
+            "Depolymerisation": {},
+            "FailedReaction": {},
+            "Polymerisation": {},
+            "Reaction": {}
+        },
+        "BlackBoxEvent": {},
+        "Depolymerisation": {},
+        "FailedReaction": {},
+        "Polymerisation": {},
+        "Reaction": {}
+    },
+    "Pathway": {
+        "TopLevelPathway": {}
+    },
+    "TopLevelPathway": {},
+    "ReactionLikeEvent": {
+        "BlackBoxEvent": {},
+        "Depolymerisation": {},
+        "FailedReaction": {},
+        "Polymerisation": {},
+        "Reaction": {}
+    },
+    "BlackBoxEvent": {},
+    "Depolymerisation": {},
+    "FailedReaction": {},
+    "Polymerisation": {},
+    "Reaction": {},
+    "EvidenceType": {},
+    "ExternalOntology": {
+        "CellType": {},
+        "Disease": {},
+        "PsiMod": {},
+        "SequenceOntology": {}
+    },
+    "CellType": {},
+    "Disease": {},
+    "PsiMod": {},
+    "SequenceOntology": {},
+    "Figure": {},
+    "FunctionalStatus": {},
+    "FunctionalStatusType": {},
+    "GO_Term": {
+        "GO_BiologicalProcess": {},
+        "GO_CellularComponent": {
+            "Compartment": {}
+        },
+        "Compartment": {},
+        "GO_MolecularFunction": {}
+    },
+    "GO_BiologicalProcess": {},
+    "GO_CellularComponent": {
+        "Compartment": {}
+    },
+    "Compartment": {},
+    "GO_MolecularFunction": {},
+    "InstanceEdit": {},
+    "Interaction": {
+        "UndirectedInteraction": {}
+    },
+    "UndirectedInteraction": {},
+    "NegativePrecedingEvent": {},
+    "Person": {},
+    "PhysicalEntity": {
+        "Complex": {},
+        "Drug": {
+            "ChemicalDrug": {},
+            "ProteinDrug": {}
+        },
+        "ChemicalDrug": {},
+        "ProteinDrug": {},
+        "EntitySet": {
+            "CandidateSet": {},
+            "DefinedSet": {}
+        },
+        "CandidateSet": {},
+        "DefinedSet": {},
+        "GenomeEncodedEntity": {
+            "EntityWithAccessionedSequence": {}
+        },
+        "EntityWithAccessionedSequence": {},
+        "OtherEntity": {},
+        "Polymer": {},
+        "SimpleEntity": {}
+    },
+    "Complex": {},
+    "Drug": {
+        "ChemicalDrug": {},
+        "ProteinDrug": {}
+    },
+    "ChemicalDrug": {},
+    "ProteinDrug": {},
+    "EntitySet": {
+        "CandidateSet": {},
+        "DefinedSet": {}
+    },
+    "CandidateSet": {},
+    "DefinedSet": {},
+    "GenomeEncodedEntity": {
+        "EntityWithAccessionedSequence": {}
+    },
+    "EntityWithAccessionedSequence": {},
+    "OtherEntity": {},
+    "Polymer": {},
+    "SimpleEntity": {},
+    "Publication": {
+        "Book": {},
+        "LiteratureReference": {},
+        "URL": {}
+    },
+    "Book": {},
+    "LiteratureReference": {},
+    "URL": {},
+    "ReferenceDatabase": {},
+    "ReferenceEntity": {
+        "ReferenceGroup": {},
+        "ReferenceMolecule": {},
+        "ReferenceSequence": {
+            "ReferenceDNASequence": {},
+            "ReferenceGeneProduct": {
+                "ReferenceIsoform": {}
+            },
+            "ReferenceIsoform": {},
+            "ReferenceRNASequence": {}
+        },
+        "ReferenceDNASequence": {},
+        "ReferenceGeneProduct": {
+            "ReferenceIsoform": {}
+        },
+        "ReferenceIsoform": {},
+        "ReferenceRNASequence": {},
+        "ReferenceTherapeutic": {}
+    },
+    "ReferenceGroup": {},
+    "ReferenceMolecule": {},
+    "ReferenceSequence": {
+        "ReferenceDNASequence": {},
+        "ReferenceGeneProduct": {
+            "ReferenceIsoform": {}
+        },
+        "ReferenceIsoform": {},
+        "ReferenceRNASequence": {}
+    },
+    "ReferenceDNASequence": {},
+    "ReferenceGeneProduct": {
+        "ReferenceIsoform": {}
+    },
+    "ReferenceIsoform": {},
+    "ReferenceRNASequence": {},
+    "ReferenceTherapeutic": {},
+    "Regulation": {
+        "NegativeRegulation": {
+            "NegativeGeneExpressionRegulation": {}
+        },
+        "NegativeGeneExpressionRegulation": {},
+        "PositiveRegulation": {
+            "PositiveGeneExpressionRegulation": {},
+            "Requirement": {}
+        },
+        "PositiveGeneExpressionRegulation": {},
+        "Requirement": {}
+    },
+    "NegativeRegulation": {
+        "NegativeGeneExpressionRegulation": {}
+    },
+    "NegativeGeneExpressionRegulation": {},
+    "PositiveRegulation": {
+        "PositiveGeneExpressionRegulation": {},
+        "Requirement": {}
+    },
+    "PositiveGeneExpressionRegulation": {},
+    "Requirement": {},
+    "Summation": {},
+    "Taxon": {
+        "Species": {}
+    },
+    "Species": {}
+}

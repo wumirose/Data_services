@@ -1,7 +1,12 @@
-from flask import Flask, render_template
 import json
 import requests
 from bs4 import BeautifulSoup
+from fastapi import FastAPI
+import uvicorn
+from utils import *
+
+db = GraphDb()
+app = FastAPI()
 
 
 def extract_hierarchy(ul):
@@ -23,15 +28,17 @@ with open('data.json', 'w') as f:
     f.write(json.dumps(hierarchy, indent=4))
 
 
-app = Flask(__name__)
-
-
-@app.route('/')
+@app.get('/')
 def index():
     with open('data.json') as fl:
         data = json.load(fl)
-    return render_template('index.html', data=json.dumps(data))
+    return data
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    unique_nodes_edges()
+    # nodes = get_nodes(node_label=None)
+    # relationships = get_edges(edge_label=None)
+    # get_node_edge_json(nodes, relationships)
+    uvicorn.run(app, host="127.0.0.1", port=5049)
+
