@@ -1,0 +1,292 @@
+{
+    "edge_types": [
+        {
+            "count": 9296,
+            "edge_type": "activeUnit"
+        },
+        {
+            "count": 37991,
+            "edge_type": "activity"
+        },
+        {
+            "count": 466,
+            "edge_type": "affiliation"
+        },
+        {
+            "count": 340320,
+            "edge_type": "author"
+        },
+        {
+            "count": 20989,
+            "edge_type": "authored"
+        },
+        {
+            "count": 48699,
+            "edge_type": "catalystActivity"
+        },
+        {
+            "count": 1185,
+            "edge_type": "catalystActivityReference"
+        },
+        {
+            "count": 59,
+            "edge_type": "cellType"
+        },
+        {
+            "count": 552643,
+            "edge_type": "compartment"
+        },
+        {
+            "count": 286,
+            "edge_type": "componentOf"
+        },
+        {
+            "count": 2309013,
+            "edge_type": "created"
+        },
+        {
+            "count": 716584,
+            "edge_type": "crossReference"
+        },
+        {
+            "count": 18279,
+            "edge_type": "disease"
+        },
+        {
+            "count": 677,
+            "edge_type": "diseaseEntity"
+        },
+        {
+            "count": 19175,
+            "edge_type": "edited"
+        },
+        {
+            "count": 784,
+            "edge_type": "entityFunctionalStatus"
+        },
+        {
+            "count": 542,
+            "edge_type": "entityOnOtherCell"
+        },
+        {
+            "count": 614,
+            "edge_type": "equivalentTo"
+        },
+        {
+            "count": 92809,
+            "edge_type": "evidenceType"
+        },
+        {
+            "count": 922,
+            "edge_type": "figure"
+        },
+        {
+            "count": 1021,
+            "edge_type": "functionalStatus"
+        },
+        {
+            "count": 27,
+            "edge_type": "functionalStatusType"
+        },
+        {
+            "count": 16330,
+            "edge_type": "goBiologicalProcess"
+        },
+        {
+            "count": 590,
+            "edge_type": "goCellularComponent"
+        },
+        {
+            "count": 39150,
+            "edge_type": "hasCandidate"
+        },
+        {
+            "count": 251705,
+            "edge_type": "hasComponent"
+        },
+        {
+            "count": 5047,
+            "edge_type": "hasEncapsulatedEvent"
+        },
+        {
+            "count": 115605,
+            "edge_type": "hasEvent"
+        },
+        {
+            "count": 186313,
+            "edge_type": "hasMember"
+        },
+        {
+            "count": 121386,
+            "edge_type": "hasModifiedResidue"
+        },
+        {
+            "count": 32,
+            "edge_type": "hasPart"
+        },
+        {
+            "count": 6535,
+            "edge_type": "includedLocation"
+        },
+        {
+            "count": 459538,
+            "edge_type": "inferredTo"
+        },
+        {
+            "count": 176305,
+            "edge_type": "input"
+        },
+        {
+            "count": 545,
+            "edge_type": "instanceOf"
+        },
+        {
+            "count": 99946,
+            "edge_type": "interactor"
+        },
+        {
+            "count": 353,
+            "edge_type": "isoformParent"
+        },
+        {
+            "count": 89396,
+            "edge_type": "literatureReference"
+        },
+        {
+            "count": 13156,
+            "edge_type": "modification"
+        },
+        {
+            "count": 214400,
+            "edge_type": "modified"
+        },
+        {
+            "count": 307,
+            "edge_type": "negativePrecedingEvent"
+        },
+        {
+            "count": 596,
+            "edge_type": "normalEntity"
+        },
+        {
+            "count": 428,
+            "edge_type": "normalPathway"
+        },
+        {
+            "count": 707,
+            "edge_type": "normalReaction"
+        },
+        {
+            "count": 149570,
+            "edge_type": "output"
+        },
+        {
+            "count": 37914,
+            "edge_type": "physicalEntity"
+        },
+        {
+            "count": 67949,
+            "edge_type": "precedingEvent"
+        },
+        {
+            "count": 53705,
+            "edge_type": "psiMod"
+        },
+        {
+            "count": 90,
+            "edge_type": "publisher"
+        },
+        {
+            "count": 15,
+            "edge_type": "reactionType"
+        },
+        {
+            "count": 297,
+            "edge_type": "reason"
+        },
+        {
+            "count": 1502712,
+            "edge_type": "referenceDatabase"
+        },
+        {
+            "count": 250160,
+            "edge_type": "referenceEntity"
+        },
+        {
+            "count": 508753,
+            "edge_type": "referenceGene"
+        },
+        {
+            "count": 53949,
+            "edge_type": "referenceSequence"
+        },
+        {
+            "count": 119682,
+            "edge_type": "referenceTranscript"
+        },
+        {
+            "count": 9271,
+            "edge_type": "regulatedBy"
+        },
+        {
+            "count": 1414,
+            "edge_type": "regulation"
+        },
+        {
+            "count": 1445,
+            "edge_type": "regulationReference"
+        },
+        {
+            "count": 6503,
+            "edge_type": "regulator"
+        },
+        {
+            "count": 2387,
+            "edge_type": "relatedSpecies"
+        },
+        {
+            "count": 1544,
+            "edge_type": "repeatedUnit"
+        },
+        {
+            "count": 78,
+            "edge_type": "requiredInputComponent"
+        },
+        {
+            "count": 115,
+            "edge_type": "reverseReaction"
+        },
+        {
+            "count": 24012,
+            "edge_type": "reviewed"
+        },
+        {
+            "count": 1385,
+            "edge_type": "revised"
+        },
+        {
+            "count": 669,
+            "edge_type": "secondReferenceSequence"
+        },
+        {
+            "count": 1245936,
+            "edge_type": "species"
+        },
+        {
+            "count": 27,
+            "edge_type": "structuralVariant"
+        },
+        {
+            "count": 199878,
+            "edge_type": "summation"
+        },
+        {
+            "count": 387,
+            "edge_type": "superTaxon"
+        },
+        {
+            "count": 181,
+            "edge_type": "surroundedBy"
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 from neo4j import GraphDatabase
 import json
 import os
+from pandas import DataFrame
 
 
 class GraphDb:
@@ -60,21 +61,43 @@ def unique_nodes_edges():
         """
         results = db.query(cypher_query, db='reactome')
 
-        node_data = json.dumps(results[0][0])['node_labels']
-        edge_data = json.dumps(results[0][0])['edge_types']
+        node_data = {'node_labels': results[0][0]['node_labels']}
+        edge_data = {'edge_types': results[0][0]['edge_types']}
+
+        # print("node_data", node_data)
         with open('unique_nodes.json', 'w') as f:
-            f.write(node_data)
-        with open('unique_edges.json', 'w') as f:
-            f.write(edge_data)
+            f.write(json.dumps(node_data, indent=4))
+        with open('unique_edges.json', 'w') as fl:
+            fl.write(json.dumps(edge_data, indent=4))
     else:
-        with open('unique_edges.json', 'r') as f:
-            node_json_data = json.loads(f.read())
-        with open('unique_edges.json', 'r') as f:
-            edge_json_data = json.loads(f.read())
+        with open('unique_nodes.json', 'r') as f:
+            node_data = json.loads(f.read())
+        with open('unique_edges.json', 'r') as fl:
+            edge_data = json.loads(fl.read())
     print("+" * 15)
-    print(f"Unique Nodes Types: {len(node_json_data)}")
-    print(f"Unique Edges Types: {len(edge_json_data)}")
+    print(f"Unique Nodes Types: {len(node_data['node_labels'])}")
+    print(f"Unique Edges Types: {len(edge_data['edge_types'])}")
     print("+" * 15, '\n')
+
+
+def extract_hierarchy(ul):
+    hierarchies = dict()
+    for ix, li in enumerate(ul.find_all('li', recursive=False)):
+        node = li.span.text.strip()
+        children = li.find('ul')
+        if children:
+            children_hierarchy = extract_hierarchy(children)
+            hierarchies.update({node: children_hierarchy})
+    return hierarchies
+
+
+def get_triples():
+    cypher = "MATCH (a)-[r]->(b) RETURN labels(a)[-1] + '-' + type(r) + '->' + labels(b)[-1] AS Triples, " \
+             "COUNT(*) AS counts ORDER BY counts DESC"
+    results = db.query(cypher, db='reactome')
+    return DataFrame(results, columns=['Triples', 'Counts'])
+
+
 
 
 def get_nodes(node_label=None):
@@ -119,4 +142,3 @@ def get_edges(edge_label=None):
         # Get all relationships with type 'A'
         relationships = db.query(f"MATCH ()-[r:{edge_label}]->() RETURN r", db='reactome')
     return relationships
-

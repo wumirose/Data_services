@@ -1,0 +1,376 @@
+{
+    "node_labels": [
+        {
+            "count": 53949,
+            "label": "AbstractModifiedResidue"
+        },
+        {
+            "count": 327,
+            "label": "Affiliation"
+        },
+        {
+            "count": 8734,
+            "label": "BlackBoxEvent"
+        },
+        {
+            "count": 126,
+            "label": "Book"
+        },
+        {
+            "count": 8624,
+            "label": "CandidateSet"
+        },
+        {
+            "count": 37914,
+            "label": "CatalystActivity"
+        },
+        {
+            "count": 906,
+            "label": "CatalystActivityReference"
+        },
+        {
+            "count": 14,
+            "label": "CellType"
+        },
+        {
+            "count": 1027,
+            "label": "ChemicalDrug"
+        },
+        {
+            "count": 149,
+            "label": "Compartment"
+        },
+        {
+            "count": 102348,
+            "label": "Complex"
+        },
+        {
+            "count": 2320,
+            "label": "ControlReference"
+        },
+        {
+            "count": 9,
+            "label": "ControlledVocabulary"
+        },
+        {
+            "count": 1070,
+            "label": "CrosslinkedResidue"
+        },
+        {
+            "count": 1,
+            "label": "DBInfo"
+        },
+        {
+            "count": 711831,
+            "label": "DatabaseIdentifier"
+        },
+        {
+            "count": 2442414,
+            "label": "DatabaseObject"
+        },
+        {
+            "count": 36330,
+            "label": "DefinedSet"
+        },
+        {
+            "count": 30,
+            "label": "Depolymerisation"
+        },
+        {
+            "count": 744,
+            "label": "Disease"
+        },
+        {
+            "count": 1113,
+            "label": "Drug"
+        },
+        {
+            "count": 3,
+            "label": "DrugActionType"
+        },
+        {
+            "count": 677,
+            "label": "EntityFunctionalStatus"
+        },
+        {
+            "count": 44954,
+            "label": "EntitySet"
+        },
+        {
+            "count": 245399,
+            "label": "EntityWithAccessionedSequence"
+        },
+        {
+            "count": 112298,
+            "label": "Event"
+        },
+        {
+            "count": 1,
+            "label": "EvidenceType"
+        },
+        {
+            "count": 937,
+            "label": "ExternalOntology"
+        },
+        {
+            "count": 445,
+            "label": "FailedReaction"
+        },
+        {
+            "count": 864,
+            "label": "Figure"
+        },
+        {
+            "count": 81,
+            "label": "FragmentDeletionModification"
+        },
+        {
+            "count": 163,
+            "label": "FragmentInsertionModification"
+        },
+        {
+            "count": 2124,
+            "label": "FragmentModification"
+        },
+        {
+            "count": 1880,
+            "label": "FragmentReplacedModification"
+        },
+        {
+            "count": 27,
+            "label": "FunctionalStatus"
+        },
+        {
+            "count": 5,
+            "label": "FunctionalStatusType"
+        },
+        {
+            "count": 944,
+            "label": "GO_BiologicalProcess"
+        },
+        {
+            "count": 459,
+            "label": "GO_CellularComponent"
+        },
+        {
+            "count": 1516,
+            "label": "GO_MolecularFunction"
+        },
+        {
+            "count": 2919,
+            "label": "GO_Term"
+        },
+        {
+            "count": 5137,
+            "label": "GeneticallyModifiedResidue"
+        },
+        {
+            "count": 251243,
+            "label": "GenomeEncodedEntity"
+        },
+        {
+            "count": 12308,
+            "label": "GroupModifiedResidue"
+        },
+        {
+            "count": 117465,
+            "label": "InstanceEdit"
+        },
+        {
+            "count": 669,
+            "label": "InterChainCrosslinkedResidue"
+        },
+        {
+            "count": 49973,
+            "label": "Interaction"
+        },
+        {
+            "count": 401,
+            "label": "IntraChainCrosslinkedResidue"
+        },
+        {
+            "count": 36269,
+            "label": "LiteratureReference"
+        },
+        {
+            "count": 15,
+            "label": "ModifiedNucleotide"
+        },
+        {
+            "count": 35419,
+            "label": "ModifiedResidue"
+        },
+        {
+            "count": 238,
+            "label": "NegativeGeneExpressionRegulation"
+        },
+        {
+            "count": 307,
+            "label": "NegativePrecedingEvent"
+        },
+        {
+            "count": 6,
+            "label": "NegativePrecedingEventReason"
+        },
+        {
+            "count": 2686,
+            "label": "NegativeRegulation"
+        },
+        {
+            "count": 1093,
+            "label": "NonsenseMutation"
+        },
+        {
+            "count": 340,
+            "label": "OtherEntity"
+        },
+        {
+            "count": 22040,
+            "label": "Pathway"
+        },
+        {
+            "count": 145880,
+            "label": "Person"
+        },
+        {
+            "count": 405149,
+            "label": "PhysicalEntity"
+        },
+        {
+            "count": 1503,
+            "label": "Polymer"
+        },
+        {
+            "count": 236,
+            "label": "Polymerisation"
+        },
+        {
+            "count": 916,
+            "label": "PositiveGeneExpressionRegulation"
+        },
+        {
+            "count": 3817,
+            "label": "PositiveRegulation"
+        },
+        {
+            "count": 86,
+            "label": "ProteinDrug"
+        },
+        {
+            "count": 164,
+            "label": "PsiMod"
+        },
+        {
+            "count": 36438,
+            "label": "Publication"
+        },
+        {
+            "count": 80813,
+            "label": "Reaction"
+        },
+        {
+            "count": 90258,
+            "label": "ReactionLikeEvent"
+        },
+        {
+            "count": 3,
+            "label": "ReactionType"
+        },
+        {
+            "count": 509585,
+            "label": "ReferenceDNASequence"
+        },
+        {
+            "count": 154,
+            "label": "ReferenceDatabase"
+        },
+        {
+            "count": 737052,
+            "label": "ReferenceEntity"
+        },
+        {
+            "count": 104293,
+            "label": "ReferenceGeneProduct"
+        },
+        {
+            "count": 111,
+            "label": "ReferenceGroup"
+        },
+        {
+            "count": 2228,
+            "label": "ReferenceIsoform"
+        },
+        {
+            "count": 2071,
+            "label": "ReferenceMolecule"
+        },
+        {
+            "count": 119956,
+            "label": "ReferenceRNASequence"
+        },
+        {
+            "count": 733834,
+            "label": "ReferenceSequence"
+        },
+        {
+            "count": 1036,
+            "label": "ReferenceTherapeutic"
+        },
+        {
+            "count": 6503,
+            "label": "Regulation"
+        },
+        {
+            "count": 1414,
+            "label": "RegulationReference"
+        },
+        {
+            "count": 3013,
+            "label": "ReplacedResidue"
+        },
+        {
+            "count": 706,
+            "label": "Requirement"
+        },
+        {
+            "count": 15,
+            "label": "SequenceOntology"
+        },
+        {
+            "count": 3648,
+            "label": "SimpleEntity"
+        },
+        {
+            "count": 84,
+            "label": "Species"
+        },
+        {
+            "count": 19025,
+            "label": "Summation"
+        },
+        {
+            "count": 390,
+            "label": "Taxon"
+        },
+        {
+            "count": 406,
+            "label": "TopLevelPathway"
+        },
+        {
+            "count": 15,
+            "label": "TranscriptionalModification"
+        },
+        {
+            "count": 48797,
+            "label": "TranslationalModification"
+        },
+        {
+            "count": 43,
+            "label": "URL"
+        },
+        {
+            "count": 49973,
+            "label": "UndirectedInteraction"
+        }
+    ]
+}
