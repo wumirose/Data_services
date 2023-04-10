@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 import uvicorn
+from gspread.exceptions import APIError
+
 from utils import *
 
 app = FastAPI()
@@ -40,7 +42,11 @@ async def create_item():
 
 @app.get("/triples", tags=['Triples Dataframe'])
 async def triple(request: Request):
-    dataframe = get_triples()
+    try:
+        dataframe = loaddocs()
+    except APIError as e:
+       dataframe = get_triples()
+
     table = dataframe.to_html()
     return templates.TemplateResponse("index.html", {"request": request, "table": table})
 

@@ -2,7 +2,8 @@ from neo4j import GraphDatabase
 import json
 import os
 from pandas import DataFrame
-
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 class GraphDb:
     def __init__(self):
@@ -35,6 +36,26 @@ class GraphDb:
 
 
 db = GraphDb()
+
+def loaddocs():
+
+    # Define the scope of the API request
+    scope = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+
+    # Load credentials from a JSON file
+    creds = ServiceAccountCredentials.from_json_keyfile_name('genial-current-261120-c0ee3c5aa62d.json', scope)
+
+    # Authorize the client using the credentials
+    client = gspread.authorize(creds)
+
+    # Open the Google Sheets spreadsheet by its title
+    sheet = client.open('https://docs.google.com/spreadsheets/d/1bTvmME_xNPjAvf7GzJ0T8doEmngxdVwS3mNOpWZbcUE/edit?usp=sharing').sheet1
+
+    # Get all the data from the spreadsheet
+    data = sheet.get_all_values()
+    return data
+
+
 
 
 def unique_nodes_edges():
