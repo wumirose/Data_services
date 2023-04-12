@@ -2,6 +2,7 @@ from collections import defaultdict
 import importlib
 
 BIOLINK = 'Biolink'
+CAM_KP = 'CAM-KP'
 CHEBI_PROPERTIES = 'CHEBIProps'
 CORD19 = 'Cord19'
 CTD = 'CTD'
@@ -24,7 +25,7 @@ PLANT_GOA = 'PlantGOA'
 SCENT = 'Scent'
 STRING_DB = 'STRING-DB'
 TEXT_MINING_KP = 'textminingkp'
-UBERGRAPH = 'UberGraph'
+UBERGRAPH = 'Ubergraph'
 UNIREF = 'UniRef'
 VP = 'ViralProteome'
 YEASTSGD = 'YeastSGDInfo'
@@ -36,6 +37,7 @@ RESOURCE_HOGS = [GTEX, GWAS_CATALOG, UNIREF, ONTOLOGICAL_HIERARCHY, YEASTSGD, ST
 
 SOURCE_DATA_LOADER_CLASS_IMPORTS = {
     BIOLINK: ("parsers.biolink.src.loadBL", "BLLoader"),
+    CAM_KP: ("parsers.camkp.src.loadCAMKP", "CAMKPLoader"),
     CHEBI_PROPERTIES: ("parsers.chebi.src.loadChebiProperties", "ChebiPropertiesLoader"),
     CORD19: ("parsers.cord19.src.loadCord19", "Cord19Loader"),
     CTD: ("parsers.CTD.src.loadCTD", "CTDLoader"),
@@ -50,7 +52,7 @@ SOURCE_DATA_LOADER_CLASS_IMPORTS = {
     HUMAN_GOA: ("parsers.GOA.src.loadGOA", "HumanGOALoader"),
     INTACT: ("parsers.IntAct.src.loadIA", "IALoader"),
     MONDO_PROPS: ("parsers.MONDOProperties.src.loadMP", "MPLoader"),
-    ONTOLOGICAL_HIERARCHY: ("parsers.OntologicalHierarchy.src.loadOH", "OHLoader"),
+    ONTOLOGICAL_HIERARCHY: ("parsers.UberGraph.src.loadOH", "OHLoader"),
     PANTHER: ("parsers.panther.src.loadPanther", "PLoader"),
     PHAROS: ("parsers.PHAROS.src.loadPHAROS", "PHAROSLoader"),
     PLANT_GOA: ("parsers.GOA.src.loadGOA", "PlantGOALoader"),

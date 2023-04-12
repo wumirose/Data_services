@@ -1,6 +1,5 @@
 import os
 import argparse
-import pyoxigraph
 import tarfile
 
 from io import TextIOWrapper
@@ -18,13 +17,13 @@ from parsers.UberGraph.src.ubergraph import UberGraphTools
 ##############
 class UGLoader(SourceDataLoader):
 
-    source_id = 'UberGraph'
-    provenance_id = 'infores:ubergraph'
-    description = ""
-    source_data_url = ""
-    license = ""
-    attribution = ""
-    parsing_version: str = '1.2'
+    source_id = 'Ubergraph'
+    provenance_id = 'infores:sri-ontology'
+    description = "Ubergraph is an open-source graph database containing integrated ontologies, including GO, CHEBI, HPO, and Uberon’s anatomical ontology."
+    source_data_url = "https://github.com/INCATools/ubergraph#downloads"
+    license = "https://raw.githubusercontent.com/INCATools/ubergraph/master/LICENSE.txt"
+    attribution = "https://github.com/INCATools/ubergraph"
+    parsing_version: str = '1.3'
 
     def __init__(self, test_mode: bool = False, source_data_dir: str = None):
         """
@@ -51,10 +50,6 @@ class UGLoader(SourceDataLoader):
         return latest_source_version
 
     def get_data(self):
-        """
-        Gets the uberon graph data.
-
-        """
         archive_url = f'{self.data_url}{self.data_file}'
         gd = GetData(self.logger.level)
         gd.pull_via_http(archive_url,
